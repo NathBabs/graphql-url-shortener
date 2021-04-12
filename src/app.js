@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 80;
 const connectDB = require('./db/mongoose');
 
 app.use(helmet({
-    contentSecurityPolicy: (process.env.NODE_ENV == 'production') ? undefined : false
+    contentSecurityPolicy: (process.env.NODE_ENV == 'production') ? false : false
 }));
 app.use(morgan('tiny'));
 //app.use(cors);
