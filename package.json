@@ -4,7 +4,8 @@
   "description": "application for shortening urls",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon ./src/app.js"
+    "dev": "nodemon ./src/app.js",
+    "start": "nodemon ./src/app.js"
   },
   "author": "Nathaniel Babalola",
   "license": "MIT",
@@ -20,5 +21,8 @@
     "morgan": "^1.10.0",
     "nanoid": "^3.1.22",
     "yup": "^0.32.9"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0"
   }
 }

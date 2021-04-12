@@ -1,3 +1,4 @@
+const os = require("os");
 const graphql = require('graphql');
 const {
     nanoid
@@ -32,13 +33,16 @@ const Objectschema = yup.object().shape({
 const UrlType = new GraphQLObjectType({
     name: 'Url',
     fields: {
-        id: {
+      /*   id: {
             type: GraphQLID
         },
         full: {
             type: GraphQLString
         },
         slug: {
+            type: GraphQLString
+        }, */
+        shortenedUrl: {
             type: GraphQLString
         }
     }
@@ -53,13 +57,18 @@ const schema = new GraphQLSchema({
         name: 'Query',
         fields: {
             shortenURL: {
-                type: GraphQLString(UrlType),
+                type: UrlType,
+                args: {
+                    url: { type : graphql.GraphQLNonNull(GraphQLString)}
+                },
                 resolve: async (root, args, context, info) => {
 
                     try {
                         const url = args.url;
+                        await Objectschema.validate({
+                            url,
+                        });
                         let slug = nanoid(6);
-                        const slugExist = false;
                         const check = await ShortUrl.findOne({
                             slug: slug
                         });
@@ -71,9 +80,19 @@ const schema = new GraphQLSchema({
                         const shortUrl = await ShortUrl.create({
                             full: url,
                             slug: slug
-                        }).lean();
-                        delete shortUrl.id;
+                        });
+                        console.log(context.headers);
+                        console.log(context.headers.referer);
+                        const shortenedUrl = `${context.headers.referer}${shortUrl.slug}`;
+                        console.log(shortenedUrl);
+                        const returnObject = {
+                            shortUrl: shortUrl,
+                            shortenedUrl: shortenedUrl
+                        };
+                        return returnObject;
+                        //delete shortUrl.id;
                         //console.log();
+                        //return ShortUrl.find({}).exec();
                     } catch (error) {
                         return error;
                     }
