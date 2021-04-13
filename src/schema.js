@@ -13,19 +13,6 @@ const {
 } = graphql;
 const ShortUrl = require('./models/short');
 
-/* const schema = new GraphQLSchema({
-    query: new GraphQLObjectType({
-        name: 'RootQueryType',
-        fields: {
-            hello: {
-                type: GraphQLString,
-                resolve() {
-                    return 'world';
-                }
-            }
-        }
-    })
-}); */
 const Objectschema = yup.object().shape({
     url: yup.string().url().required(),
     //slug: yup.string().trim().matches(/[\w\-]/i)
@@ -48,9 +35,6 @@ const UrlType = new GraphQLObjectType({
     }
 });
 
-/* const schema = new GraphQLSchema({
-    query: UrlType
-}); */
 
 const schema = new GraphQLSchema({
     query: new GraphQLObjectType({
@@ -81,18 +65,15 @@ const schema = new GraphQLSchema({
                             full: url,
                             slug: slug
                         });
-                        console.log(context.headers);
-                        console.log(context.headers.referer);
+                        //console.log(context.headers);
+                        //console.log(context.headers.referer);
                         const shortenedUrl = `${context.headers.referer}${shortUrl.slug}`;
-                        console.log(shortenedUrl);
+                        //console.log(shortenedUrl);
                         const returnObject = {
                             shortUrl: shortUrl,
                             shortenedUrl: shortenedUrl
                         };
                         return returnObject;
-                        //delete shortUrl.id;
-                        //console.log();
-                        //return ShortUrl.find({}).exec();
                     } catch (error) {
                         return error;
                     }

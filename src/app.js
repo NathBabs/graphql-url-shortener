@@ -19,6 +19,10 @@ app.use(morgan('tiny'));
 
 connectDB();
 
+app.get("/", (req, res) => {
+  res.send(`URL Shortener Service ${new Date()}`);
+});
+
 app.use('/graphql', graphqlHTTP({
     schema: schema,
     graphiql: true
