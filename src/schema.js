@@ -12,6 +12,7 @@ const {
     GraphQLID
 } = graphql;
 const ShortUrl = require('./models/short');
+const hostName = 'http://nath.link/';
 
 // define the object shape and type with yup so we can validate
 const Objectschema = yup.object().shape({
@@ -54,7 +55,7 @@ const schema = new GraphQLSchema({
 
                         if (urlExists) {
                             return {
-                                shortenedUrl: `${context.headers.referer}${urlExists.slug}`
+                                shortenedUrl: `${hostName}${urlExists.slug}`
                             };
                         }
 
@@ -75,7 +76,7 @@ const schema = new GraphQLSchema({
                             slug: slug
                         });
                         
-                        shortenedUrl = `${context.headers.referer}${shortUrl.slug}`;
+                        shortenedUrl = `${hostName}${shortUrl.slug}`;
                         
                         const returnObject = {
                             shortenedUrl: shortenedUrl
