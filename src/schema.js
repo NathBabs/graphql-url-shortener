@@ -13,22 +13,13 @@ const {
 } = graphql;
 const ShortUrl = require('./models/short');
 
+// define the object shape and type with yup so we can validate
 const Objectschema = yup.object().shape({
-    url: yup.string().url().required(),
-    //slug: yup.string().trim().matches(/[\w\-]/i)
+    url: yup.string().url().required()
 });
 const UrlType = new GraphQLObjectType({
     name: 'Url',
     fields: {
-      /*   id: {
-            type: GraphQLID
-        },
-        full: {
-            type: GraphQLString
-        },
-        slug: {
-            type: GraphQLString
-        }, */
         shortenedUrl: {
             type: GraphQLString
         }
@@ -46,12 +37,30 @@ const schema = new GraphQLSchema({
                     url: { type : graphql.GraphQLNonNull(GraphQLString)}
                 },
                 resolve: async (root, args, context, info) => {
-
                     try {
+
+                        let shortenedUrl;
                         const url = args.url;
+
+                        //check if it's a valid url
                         await Objectschema.validate({
                             url,
                         });
+
+                        //check if url has been shortened before and return the shortened url
+                        const urlExists = await ShortUrl.findOne({
+                            full: url
+                        });
+
+                        if (urlExists) {
+                            return {
+                                shortenedUrl: `${context.headers.referer}${urlExists.slug}`
+                            };
+                        }
+
+                        // this condition is to check that the slug has not been generated
+                        // and assigned to url before. Although a nanoid generated string is longer than this,
+                        // reducing it to 6 increases the chance of collision. Still the possibility is slim
                         let slug = nanoid(6);
                         const check = await ShortUrl.findOne({
                             slug: slug
@@ -65,20 +74,16 @@ const schema = new GraphQLSchema({
                             full: url,
                             slug: slug
                         });
-                        //console.log(context.headers);
-                        //console.log(context.headers.referer);
-                        const shortenedUrl = `${context.headers.referer}${shortUrl.slug}`;
-                        //console.log(shortenedUrl);
+                        
+                        shortenedUrl = `${context.headers.referer}${shortUrl.slug}`;
+                        
                         const returnObject = {
-                            shortUrl: shortUrl,
                             shortenedUrl: shortenedUrl
                         };
                         return returnObject;
                     } catch (error) {
                         return error;
                     }
-
-
                 }
             }
         }

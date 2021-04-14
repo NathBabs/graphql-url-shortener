@@ -19,6 +19,3 @@ const connectDB = async() => {
 //connectDB();
 
 module.exports = connectDB;
-
-//mongodb+srv://taskapp:G6RedGLyRB8E7yi@cluster0-hv6k0.azure.mongodb.net/storybooks
-//mongodb+srv://nathaniel:juventus@cluster0.hv6k0.azure.mongodb.net/url-shortener?retryWrites=true&w=majority

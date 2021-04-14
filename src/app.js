@@ -24,6 +24,11 @@ app.get("/", (req, res) => {
 });
 
 app.use('/graphql', graphqlHTTP({
+    schema: schema
+    //graphiql: true
+}));
+
+app.use('/graphiql', graphqlHTTP({
     schema: schema,
     graphiql: true
 }));
