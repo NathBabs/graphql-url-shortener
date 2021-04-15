@@ -7,8 +7,6 @@ const { graphqlHTTP } = require('express-graphql');
 const app = express();
 const schema = require('./schema');
 const ShortUrl = require('./models/short');
-
-const PORT = process.env.PORT || 80;
 const connectDB = require('./db/mongoose');
 
 app.use(helmet({
@@ -17,7 +15,7 @@ app.use(helmet({
 app.use(morgan('tiny'));
 //app.use(cors);
 
-connectDB();
+//connectDB();
 
 app.get("/", (req, res) => {
   res.send(`URL Shortener Service ${new Date()}`);
@@ -52,4 +50,4 @@ app.get('/:id', async (req, res) => {
     }
 });
 
-app.listen(PORT, console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`));
+module.exports = app;

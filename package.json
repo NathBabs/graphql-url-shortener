@@ -4,9 +4,10 @@
   "description": "application for shortening urls",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon ./src/app.js",
+    "dev": "nodemon ./src/index.js",
     "start": "node ./src/app.js",
-    "build": "npm install --only=dev"
+    "build": "npm install --only=dev",
+    "test": "mocha  --recursive --timeout 10000"
   },
   "author": "Nathaniel Babalola",
   "license": "MIT",
@@ -24,7 +25,11 @@
     "yup": "^0.32.9"
   },
   "devDependencies": {
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
     "dotenv": "^8.2.0",
-    "nodemon": "^2.0.7"
+    "mocha": "^8.3.2",
+    "nodemon": "^2.0.7",
+    "supertest": "^6.1.3"
   }
 }
