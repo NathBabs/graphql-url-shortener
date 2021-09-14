@@ -37,7 +37,6 @@ http://nath.link
     $ npm test
     ```
 <br>
-<br>
 
 ### Make requests from your app or postman from ```/graphql``` endpoint or from GraphiQL mounted on  at
 ```
