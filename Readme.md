@@ -5,8 +5,41 @@
 ```
 http://nath.link
 ```
+## Running the project
 
-### Make requests from your app/postman from ```/graphql``` or from GraphiQL mounted on  at
+1. Clone repository 
+    ```
+    $ git clone https://github.com/NathBabs/graphql-url-shortener.git
+    ```
+2. cd into the project directory
+
+3. Run the following command to install dependencies.
+    ``` 
+    npm install
+    ``` 
+
+4. Add the following environment variables to your ```.env``` file in the root of your project.
+    * MONGODB_URI
+    * MONGODB_TEST_URI
+    * PORT
+
+5. Run the project with 
+    ```
+    $ npm start
+    ``` 
+    or 
+    ```
+    $ npm run dev
+    ```
+
+6. To run the tests, run 
+    ```
+    $ npm test
+    ```
+<br>
+<br>
+
+### Make requests from your app or postman from ```/graphql``` endpoint or from GraphiQL mounted on  at
 ```
 /graphiql
 ```
@@ -53,16 +86,3 @@ if an invalid url is passed it returns the following error
     "shortenURL": null
   }
 }
-```
-To run tests, run the following command
-```
-$ npm test
-```
-To start the project run
-```
-$ npm start
-```
-or
-```
-$ npm run dev
-````
